@@ -23,10 +23,25 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="TextView"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="18sp"
             tools:text="Reminder Text" />
 
     </LinearLayout>
+    <view
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000"
+        class="android.view.View"/>
+    <view
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#333"
+        class="android.view.View"/>
+
 </LinearLayout>
