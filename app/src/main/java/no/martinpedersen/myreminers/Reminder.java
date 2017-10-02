@@ -28,7 +28,7 @@ public class Reminder {
     }
 
     public void setImportant(int important) {
-        this.mImportant = important;
+        mImportant = important;
     }
 
     public String getContent() {
