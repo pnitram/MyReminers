@@ -1,7 +1,10 @@
 package no.martinpedersen.myreminers;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by marti on 03.10.2017.
@@ -38,5 +41,45 @@ public class RemindersDbAdapter {
                     COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
                     COL_CONTENT + " TEXT, " +
                     COL_IMPORTANT + " INTEGER );";
+
+    public RemindersDbAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
+
+    //open
+    public void open() throws SQLException {
+        mDbHelper = new DatabaseHelper(mCtx);
+        mDb = mDbHelper.getReadableDatabase();
+    }
+
+    //close
+    public void close() {
+        if (mDbHelper != null) {
+            mDbHelper.close();
+        }
+    }
+
+
+    private static class DatabaseHelper extends SQLiteOpenHelper {
+        public DatabaseHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+            Log.w(TAG, DATABASE_CREATE);
+            db.execSQL(DATABASE_CREATE);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion + ", which will destroy all old data");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            onCreate(db);
+        }
+    }
 
 }
