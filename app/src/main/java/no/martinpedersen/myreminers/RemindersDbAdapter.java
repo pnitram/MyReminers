@@ -44,6 +44,8 @@ public class RemindersDbAdapter {
                     COL_CONTENT + " TEXT, " +
                     COL_IMPORTANT + " INTEGER );";
 
+    //Open and close the database
+
     public RemindersDbAdapter(Context ctx) {
         this.mCtx = ctx;
     }
@@ -61,7 +63,7 @@ public class RemindersDbAdapter {
         }
     }
 
-    //CRUD operations
+    //CRUD operations (create,read,update,delete)
 
     //Create
     public void createReminder(String name, boolean important) {
@@ -116,9 +118,19 @@ public class RemindersDbAdapter {
         mDb.update(TABLE_NAME, values, COL_ID + "=?",new String[]{String.valueOf(reminder.getId())});
     }
 
+    //delete
+    public void deleteReminerById(int nID) {
+        mDb.delete(TABLE_NAME,COL_ID + "=?" ,new String[]{String.valueOf(nID)});
+    }
+
+    //delete all reminers
 
 
+    public void deleteAllReminders() {
+      mDb.delete(TABLE_NAME,null,null);
+    }
 
+    // Databasehelper static class
     private static class DatabaseHelper extends SQLiteOpenHelper {
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
